@@ -39,12 +39,26 @@ namespace API.Controllers
             return Ok(entries);
         }
 
-        [HttpGet("Take(5)")]
-        public async Task<ActionResult<List<Entry>>> GetFirstFiveEntries()
+        [HttpGet("EntriesByNonth")]
+        public async Task<ActionResult<List<Entry>>> GetEntriesSortByMonth()
         {
-            var entries = await appDbContext.Entries.Take(5).ToListAsync();
+            var entries = await appDbContext.Entries.ToListAsync();
 
-            return Ok(entries);
+            //var januarylist = entries
+            //    .Where(entry => entry.TimeOfEntry.Year == 2024 && entry.TimeOfEntry.Month == 2)
+            //    .ToList();
+
+            //return Ok(januarylist);
+
+            var entriesByMonthList = new List<List<Entry>>();
+
+            for (int month = 1; month <= 12; month++)
+            {
+                var entriesInMonth = entries.Where(entry => entry.TimeOfEntry.Month == month).ToList();
+
+                entriesByMonthList.Add(entriesInMonth);
+            }
+            return Ok(entriesByMonthList);
         }
 
         [HttpGet("id:int")]
