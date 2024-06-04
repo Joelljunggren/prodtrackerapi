@@ -1,6 +1,5 @@
 ﻿using API.Data;
 using API.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +38,7 @@ namespace API.Controllers
             return Ok(entries);
         }
 
-        [HttpGet("EntriesByNonth")]
+        [HttpGet("EntriesByMonth")]
         public async Task<ActionResult<List<Entry>>> GetEntriesSortByMonth()
         {
             var entries = await appDbContext.Entries.ToListAsync();
